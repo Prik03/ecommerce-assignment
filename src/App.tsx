@@ -1,12 +1,11 @@
-function App() {
+import Navbar from './components/Navbar';
 
+function App() {
   return (
     <>
-      <section id="center">
-       <h1 className="text-3xl font-bold">E-commerce App</h1>
-      </section>
+      <Navbar />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
