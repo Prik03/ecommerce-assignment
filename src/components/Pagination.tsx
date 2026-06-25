@@ -14,7 +14,7 @@ const Pagination = ({
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="flex justify-center mt-4" aria-label="Pagination">
+    <nav className="flex justify-center mt-4 mb-4" aria-label="Pagination">
       <button
         className="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 flex items-center disabled:opacity-50"
         onClick={() => onPageChange(currentPage - 1)}

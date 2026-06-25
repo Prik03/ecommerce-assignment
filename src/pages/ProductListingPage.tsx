@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import ProductsContainer from '../components/ProductsContainer';
 
 const ProductListingPage = () => {
+  useEffect(() => {
+    document.title = 'Leegality';
+  }, []);
+
   return (
-    <main className="p-4">
+    <main className="relative">
       <ProductsContainer />
     </main>
   );

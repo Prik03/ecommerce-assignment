@@ -17,10 +17,10 @@ const ProductDetail = (products: Product) => {
       </div>
       <div className="flex flex-wrap">
         <div className="w-[45%] border-r border-gray-200 p-2 m-5 sticky top-0">
-          <img src={products.images} />
+          <img src={products.images[0]} />
         </div>
         <div className="w-[50%]">
-          <h2 className="text-4xl font-bold">{products.title}</h2>
+          <h1 className="text-4xl font-bold">{products.title}</h1>
 
           <div className="flex items-center mt-3">
             <div className="text-3xl font-bold text-black mt-4">
@@ -42,17 +42,17 @@ const ProductDetail = (products: Product) => {
           </div>
           <hr className="mt-4 text-gray-200" aria-hidden="true" />
           <div className="mt-4">
-            <h2 className="text-4xl font-bold">Description</h2>
+            <h2 className="text-3xl font-bold">Description</h2>
             <p className="mt-4">{products.description}</p>
           </div>
           <hr className="mt-4 text-gray-200" aria-hidden="true" />
           <div className="mt-4">
-            <h2 className="text-4xl font-bold">Reviews</h2>
+            <h2 className="text-3xl font-bold">Reviews</h2>
             <div className="mt-4">
               {products.reviews.map((review, index) => (
                 <div key={index} className="mb-3">
                   <div className="flex items-center justify-between w-[40%]">
-                    <h3 className="text-2xl font-semibold">
+                    <h3 className="text-xl font-semibold">
                       {review.reviewerName}
                     </h3>
                     <div className="flex items-center text-2xl ml-6">

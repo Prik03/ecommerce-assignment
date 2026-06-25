@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Pagination from './Pagination';
 import ProductCard from './ProductCard';
+import { useProductStore } from '../store/useProductStore';
+import FilterModal from './FilterModal';
 
 const ProductsContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -10,8 +12,17 @@ const ProductsContainer = () => {
     const pageParam = Number(searchParams.get('page'));
     return Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
   });
-  const [totalProducts, setTotalProducts] = useState(0);
   const pageSize = 10;
+
+  const {
+    totalProducts,
+    selectedCategories,
+    selectedBrands,
+    minPrice,
+    maxPrice,
+    fetchProducts,
+  } = useProductStore();
+
   const totalPages = Math.max(1, Math.ceil(totalProducts / pageSize));
 
   useEffect(() => {
@@ -20,14 +31,26 @@ const ProductsContainer = () => {
 
     if (safePage !== currentPage) {
       setCurrentPage(safePage);
+      return;
     }
-  }, [searchParams, currentPage]);
+
+    void fetchProducts({ page: currentPage, pageSize, searchTerm });
+  }, [
+    currentPage,
+    fetchProducts,
+    pageSize,
+    searchParams,
+    searchTerm,
+    selectedCategories,
+    selectedBrands,
+    minPrice,
+    maxPrice,
+  ]);
 
   const handlePageChange = (page: number) => {
     const safePage = Math.min(Math.max(page, 1), totalPages);
     const nextParams = new URLSearchParams(searchParams);
     nextParams.set('page', safePage.toString());
-    nextParams.set('limit', pageSize.toString());
 
     if (searchTerm) {
       nextParams.set('q', searchTerm);
@@ -41,19 +64,17 @@ const ProductsContainer = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        <ProductCard
-          page={currentPage}
-          pageSize={pageSize}
-          searchTerm={searchTerm}
-          onDataLoaded={setTotalProducts}
-        />
+      <div className="flex">
+        <FilterModal />
+        <div className="">
+          <ProductCard />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
     </>
   );
 };
