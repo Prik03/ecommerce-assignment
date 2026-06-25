@@ -1,13 +1,11 @@
 import Navbar from './components/Navbar';
-import ProductsContainer from './components/ProductsContainer';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
     <>
       <Navbar />
-      <main className="p-4">
-        <ProductsContainer />
-      </main>
+      <AppRoutes />
     </>
   );
 }
