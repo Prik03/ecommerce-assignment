@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../api/productApi';
+import ProductDetail from '../components/ProductDetail';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -26,9 +27,7 @@ const ProductDetailPage = () => {
 
   return (
     <div>
-      <h1>{product.title}</h1>
-      <p>{product.price}</p>
-      <p>{product.description}</p>
+      <ProductDetail {...product} />
     </div>
   );
 };

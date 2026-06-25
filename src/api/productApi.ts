@@ -7,13 +7,18 @@ const api = axios.create({
   },
 });
 
-export const getProducts = async (limit = 12, skip = 0) => {
-  const { data } = await api.get('/products', {
+export const getProducts = async (limit = 12, skip = 0, search = '') => {
+  const trimmedSearch = search.trim();
+  const endpoint = trimmedSearch ? '/products/search' : '/products';
+
+  const { data } = await api.get(endpoint, {
     params: {
       limit,
       skip,
+      ...(trimmedSearch ? { q: trimmedSearch } : {}),
     },
   });
+
   return data;
 };
 

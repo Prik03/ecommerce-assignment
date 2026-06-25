@@ -4,22 +4,35 @@ import StarRating from './StarRating';
 import Skeleton from './Skeleton';
 import { Link, useNavigate } from 'react-router-dom';
 
-const ProductCard = () => {
+type ProductCardProps = {
+  page: number;
+  pageSize: number;
+  searchTerm?: string;
+  onDataLoaded?: (total: number) => void;
+};
+
+const ProductCard = ({
+  page,
+  pageSize,
+  searchTerm = '',
+  onDataLoaded,
+}: ProductCardProps) => {
   const [Loading, setLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<null | string>(null);
-  const PAGE_SIZE = 10;
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setError(null);
 
-        const data = await getProducts(PAGE_SIZE, 0);
+        const skip = (page - 1) * pageSize;
+        const data = await getProducts(pageSize, skip, searchTerm);
         setProducts(data.products);
-        console.log(data.products);
-      } catch (error) {
+        onDataLoaded?.(data.total);
+      } catch {
         setError('Failed to fetch products');
       } finally {
         setLoading(false);
@@ -27,7 +40,7 @@ const ProductCard = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [page, pageSize, searchTerm, onDataLoaded]);
 
   return (
     <>
@@ -37,8 +50,13 @@ const ProductCard = () => {
         </div>
       )}
       {error && <p className="text-red-500">{error}</p>}
+      {!Loading && products.length === 0 && !error && (
+        <p className="col-span-full text-center text-gray-500">
+          No products found.
+        </p>
+      )}
       {Loading
-        ? Array.from({ length: PAGE_SIZE }).map((_, index) => (
+        ? Array.from({ length: pageSize }).map((_, index) => (
             <Skeleton key={index} />
           ))
         : products.map((product) => (
