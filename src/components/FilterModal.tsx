@@ -31,13 +31,6 @@ const FilterModal = () => {
 
   return (
     <>
-      {/* <div
-        className={`bg-black/40 transition-opacity duration-300 ${
-          isFilterOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={closeFilter}
-        aria-hidden="true"
-      /> */}
       <aside
         className={`left-0 top-0 ${isFilterOpen ? 'h-230' : 'h-0'} ${isFilterOpen ? 'w-full' : 'w-0'} max-w-[20%] bg-[#f3f2f4] shadow-2xl overflow-auto p-4 transition-transform duration-300 sticky top-0 ${
           isFilterOpen ? 'translate-x-0' : '-translate-x-full'
