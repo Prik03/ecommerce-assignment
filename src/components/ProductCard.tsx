@@ -16,13 +16,13 @@ const ProductCard = () => {
       )}
       {error && <p className="text-red-500">{error}</p>}
       {!loading && products.length === 0 && !error && (
-        <p className="col-span-full text-center text-gray-500">
+        <p className="col-span-full text-center text-gray-500" role="status">
           No products found.
         </p>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 w-full">
         {loading
-          ? Array.from({ length: 8 }).map((_, index) => (
+          ? Array.from({ length: 5 }).map((_, index) => (
               <Skeleton key={index} />
             ))
           : products.map((product) => {
@@ -33,15 +33,15 @@ const ProductCard = () => {
               return (
                 <div
                   key={product.id}
-                  className="bg-white shadow-md rounded-lg p-4 cursor-pointer"
+                  className="bg-white shadow-md rounded-lg p-4 cursor-pointer h-full flex flex-col"
                   onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <img
                     src={imageUrl}
                     alt={product.title}
-                    className="w-full h-auto rounded-md"
+                    className="w-full object-cover rounded-md"
                   />
-                  <Link to={`/product/${product.id}`}>
+                  <Link to={`/product/${product.id}`} className="flex-1">
                     <h3 className="text-lg font-bold mt-2">{product.title}</h3>
                   </Link>
                   <div className="flex items-center justify-between mt-2">

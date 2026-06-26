@@ -15,11 +15,11 @@ const ProductDetail = (products: Product) => {
           Back
         </button>
       </div>
-      <div className="flex flex-wrap">
-        <div className="w-[45%] border-r border-gray-200 p-2 m-5 sticky top-0">
+      <div className="flex flex-wrap p-4">
+        <div className="w-full sm:w-[45%] border-r border-gray-200 p-2 m-5">
           <img src={products.images[0]} />
         </div>
-        <div className="w-[50%]">
+        <div className="w-fill sm:w-[50%]">
           <h1 className="text-4xl font-bold">{products.title}</h1>
 
           <div className="flex items-center mt-3">
