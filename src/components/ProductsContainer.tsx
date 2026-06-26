@@ -12,7 +12,8 @@ const ProductsContainer = () => {
     const pageParam = Number(searchParams.get('page'));
     return Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
   });
-  const pageSize = 10;
+  const limitParam = Number(searchParams.get('limit'));
+  const pageSize = Number.isNaN(limitParam) || limitParam < 1 ? 10 : limitParam;
 
   const {
     totalProducts,
@@ -51,6 +52,7 @@ const ProductsContainer = () => {
     const safePage = Math.min(Math.max(page, 1), totalPages);
     const nextParams = new URLSearchParams(searchParams);
     nextParams.set('page', safePage.toString());
+    nextParams.set('limit', pageSize.toString());
 
     if (searchTerm) {
       nextParams.set('q', searchTerm);
@@ -64,9 +66,9 @@ const ProductsContainer = () => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex w-full">
         <FilterModal />
-        <div className="">
+        <div className="flex-1 min-w-0">
           <ProductCard />
           <Pagination
             currentPage={currentPage}

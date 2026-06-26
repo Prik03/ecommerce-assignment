@@ -1,15 +1,15 @@
 import { IoMdCart, IoMdClose, IoMdMenu, IoMdSearch } from 'react-icons/io';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useProductStore } from '../store/useProductStore';
 
 const Navbar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchValue, setSearchValue] = useState(searchParams.get('q') ?? '');
   const location = useLocation();
-  const navigate = useNavigate();
   const toggleFilterOpen = useProductStore((state) => state.toggleFilterOpen);
   const { isFilterOpen } = useProductStore();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     setSearchValue(searchParams.get('q') ?? '');
@@ -28,23 +28,26 @@ const Navbar = () => {
     }
 
     nextParams.set('page', '1');
+    nextParams.set('limit', searchParams.get('limit') ?? '10');
     setSearchParams(nextParams, { replace: true });
   };
 
   const handleMenuClick = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (!isHomePage) {
+      return;
     }
+
     toggleFilterOpen();
   };
 
   return (
-    <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
+    <header className="bg-gray-800 text-white p-4 flex items-center justify-between sticky top-0 z-60">
       <button
         className="rounded px-4 py-2 text-4xl font-bold text-white"
         aria-label="Open filters"
         onClick={handleMenuClick}
         aria-expanded={isFilterOpen}
+        disabled={!isHomePage}
       >
         <IoMdMenu
           aria-hidden="true"
