@@ -32,12 +32,12 @@ const FilterModal = () => {
   return (
     <>
       <aside
-        className={`left-0 top-0 ${isFilterOpen ? 'h-230' : 'h-0'} ${isFilterOpen ? 'w-full' : 'w-0'} max-w-[20%] bg-[#f3f2f4] shadow-2xl overflow-auto p-4 transition-transform duration-300 sticky top-0 ${
+        className={`sm:mt-0 left-0 sm:top-0 h-[88vh] sm:h-230 w-full max-w-full sm:max-w-[20%] z-50 sm:z-0 bg-[#f3f2f4] shadow-2xl overflow-auto p-4 transition-transform duration-300 fixed sm:sticky pb-10 ${
           isFilterOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        } ${isFilterOpen ? 'block' : 'hidden'}`}
         aria-label="Filter products"
       >
-        <div className="mt-6 space-y-6 overflow-auto sticky top-0">
+        <div className="mt-6 space-y-6 overflow-y-auto sticky top-0">
           <div className="flex items-center gap-2 rounded border border-gray-300 px-2 py-2 bg-white">
             <IoMdSearch className="text-gray-500 text-2xl" />
             <input
